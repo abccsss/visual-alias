@@ -1,0 +1,158 @@
+{
+  "name": "visual-alias",
+  "displayName": "Visual Alias",
+  "description": "Display alternative text for certain words or patterns, without changing the original text.",
+  "version": "0.0.1",
+  "repository": "https://github.com/abccsss/visual-alias",
+  "engines": {
+    "vscode": "^1.84.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "Visual Alias",
+      "properties": {
+        "visualAlias.patterns": {
+          "type": "array",
+          "description": "A list of substitution rules that can be applied to each language.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "language": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "description": "The language identifier. Use '*' to match all languages.",
+                    "markdownDescription": "The language identifier. Use `*` to match all languages."
+                  },
+                  {
+                    "type": "array",
+                    "description": "A list of language identifiers.",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              },
+              "patterns": {
+                "type": "array",
+                "description": "A list of substitution rules to apply to the language.",
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "description": "A substitution rule in the form of 'pattern/replacement', where 'pattern' is a regular expression pattern and 'replacement' is the replacement text. Note that special characters in 'pattern' need to be escaped.",
+                      "markdownDescription": "A substitution rule in the form of `pattern/replacement`, where `pattern` is a regular expression pattern and `replacement` is the replacement text. Note that special characters in `pattern` need to be escaped."
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "pattern": {
+                          "type": "string",
+                          "description": "A regular expression pattern. Note that special characters need to be escaped."
+                        },
+                        "replacement": {
+                          "type": "string",
+                          "description": "The displayed replacement text."
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": [
+            {
+              "language": "latex",
+              "patterns": [
+                "\\\\alpha(?![a-zA-Z])/α",
+                "\\\\beta(?![a-zA-Z])/β",
+                "\\\\gamma(?![a-zA-Z])/γ",
+                "\\\\delta(?![a-zA-Z])/δ",
+                "\\\\epsilon(?![a-zA-Z])/ϵ",
+                "\\\\varepsilon(?![a-zA-Z])/ε",
+                "\\\\zeta(?![a-zA-Z])/ζ",
+                "\\\\eta(?![a-zA-Z])/η",
+                "\\\\theta(?![a-zA-Z])/θ",
+                "\\\\vartheta(?![a-zA-Z])/ϑ",
+                "\\\\iota(?![a-zA-Z])/ι",
+                "\\\\kappa(?![a-zA-Z])/κ",
+                "\\\\lambda(?![a-zA-Z])/λ",
+                "\\\\mu(?![a-zA-Z])/μ",
+                "\\\\nu(?![a-zA-Z])/ν",
+                "\\\\xi(?![a-zA-Z])/ξ",
+                "\\\\omicron(?![a-zA-Z])/ο",
+                "\\\\pi(?![a-zA-Z])/π",
+                "\\\\varpi(?![a-zA-Z])/ϖ",
+                "\\\\rho(?![a-zA-Z])/ρ",
+                "\\\\varrho(?![a-zA-Z])/ϱ",
+                "\\\\sigma(?![a-zA-Z])/σ",
+                "\\\\varsigma(?![a-zA-Z])/ς",
+                "\\\\tau(?![a-zA-Z])/τ",
+                "\\\\upsilon(?![a-zA-Z])/υ",
+                "\\\\phi(?![a-zA-Z])/ϕ",
+                "\\\\varphi(?![a-zA-Z])/φ",
+                "\\\\chi(?![a-zA-Z])/χ",
+                "\\\\psi(?![a-zA-Z])/ψ",
+                "\\\\omega(?![a-zA-Z])/ω",
+                "\\\\Gamma(?![a-zA-Z])/Γ",
+                "\\\\Delta(?![a-zA-Z])/Δ",
+                "\\\\Theta(?![a-zA-Z])/Θ",
+                "\\\\Lambda(?![a-zA-Z])/Λ",
+                "\\\\Xi(?![a-zA-Z])/Ξ",
+                "\\\\Pi(?![a-zA-Z])/Π",
+                "\\\\Sigma(?![a-zA-Z])/Σ",
+                "\\\\Upsilon(?![a-zA-Z])/Υ",
+                "\\\\Phi(?![a-zA-Z])/Φ",
+                "\\\\Psi(?![a-zA-Z])/Ψ",
+                "\\\\Omega(?![a-zA-Z])/Ω",
+                "\\\\partial(?![a-zA-Z])/∂",
+                "\\\\infty(?![a-zA-Z])/∞",
+                "\\\\ell(?![a-zA-Z])/ℓ"
+              ]
+            }
+          ]
+        },
+        "visualAlias.maxLineCount": {
+          "type": "number",
+          "default": 10000,
+          "description": "The maximum number of lines to process. Set to 0 to disable the limit.",
+          "markdownDescription": "The maximum number of lines to process. Set to `0` to disable the limit."
+        },
+        "visualAlias.maxLineLength": {
+          "type": "number",
+          "default": 1000,
+          "description": "The maximum length of a line to process. Set to 0 to disable the limit.",
+          "markdownDescription": "The maximum length of a line to process. Set to `0` to disable the limit."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "yarn run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.3",
+    "@types/node": "18.x",
+    "@types/vscode": "^1.84.0",
+    "@typescript-eslint/eslint-plugin": "^6.9.0",
+    "@typescript-eslint/parser": "^6.9.0",
+    "eslint": "^8.52.0",
+    "glob": "^10.3.10",
+    "mocha": "^10.2.0",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "ts-debounce": "^4.0.0"
+  }
+}
