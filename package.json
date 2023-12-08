@@ -60,6 +60,48 @@
                         "replacement": {
                           "type": "string",
                           "description": "The displayed replacement text."
+                        },
+                        "backgroundColor": {
+                          "type": "string",
+                          "description": "The background color of the replacement text."
+                        },
+                        "border": {
+                          "type": "string",
+                          "description": "The CSS border property of the replacement text, for example '1px solid red'.",
+                          "markdownDescription": "The CSS `border` property of the replacement text, for example `1px solid red`."
+                        },
+                        "color": {
+                          "type": "string",
+                          "description": "The foreground color of the replacement text."
+                        },
+                        "fontFamily": {
+                          "type": "string",
+                          "description": "The CSS font-family property of the replacement text.",
+                          "markdownDescription": "The CSS `font-family` property of the replacement text."
+                        },
+                        "fontSize": {
+                          "type": "string",
+                          "description": "The CSS font-size property of the replacement text.",
+                          "markdownDescription": "The CSS `font-size` property of the replacement text."
+                        },
+                        "fontStyle": {
+                          "type": "string",
+                          "description": "The CSS font-style property of the replacement text.",
+                          "markdownDescription": "The CSS `font-style` property of the replacement text."
+                        },
+                        "fontWeight": {
+                          "type": "string",
+                          "description": "The CSS font-weight property of the replacement text.",
+                          "markdownDescription": "The CSS `font-weight` property of the replacement text."
+                        },
+                        "textDecoration": {
+                          "type": "string",
+                          "description": "The CSS text-decoration property of the replacement text.",
+                          "markdownDescription": "The CSS `text-decoration` property of the replacement text."
+                        },
+                        "css": {
+                          "type": "string",
+                          "description": "Additional CSS styles to apply to the replacement text."
                         }
                       }
                     }

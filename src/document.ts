@@ -174,8 +174,8 @@ export class AliasDocument extends vscode.Disposable {
           } else {
             try {
               const builtPattern: Pattern = {
+                ...pattern,
                 pattern: new RegExp(pattern.pattern, 'g'),
-                replacement: pattern.replacement,
               };
               this.patterns.push(builtPattern);
               this.decorations.set(
@@ -325,9 +325,27 @@ export class AliasDocument extends vscode.Disposable {
   }
 
   private getReplacementDecoration(pattern: Pattern) {
+    let injectedCss = '';
+    if (pattern.fontFamily) {
+      injectedCss += `; font-family: ${pattern.fontFamily}`;
+    }
+    if (pattern.fontSize) {
+      injectedCss += `; font-size: ${pattern.fontSize}`;
+    }
+    if (pattern.css) {
+      injectedCss += `; ${pattern.css}`;
+    }
+
+    // Injecting to `color` as it seems to override everything else
     return vscode.window.createTextEditorDecorationType({
       before: {
         contentText: pattern.replacement,
+        backgroundColor: pattern.backgroundColor,
+        border: pattern.border,
+        color: (pattern.color || '') + injectedCss,
+        fontStyle: pattern.fontStyle,
+        fontWeight: pattern.fontWeight,
+        textDecoration: pattern.textDecoration,
       },
       rangeBehavior: vscode.DecorationRangeBehavior.ClosedClosed,
     });
@@ -354,6 +372,15 @@ function arrayEquals<T>(a: T[], b: T[]) {
 interface Pattern {
   pattern: RegExp;
   replacement: string;
+  backgroundColor?: string;
+  border?: string;
+  color?: string;
+  fontFamily?: string;
+  fontSize?: string;
+  fontStyle?: string;
+  fontWeight?: string;
+  textDecoration?: string;
+  css?: string;
 }
 
 interface Replacement {

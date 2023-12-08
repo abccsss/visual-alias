@@ -4,7 +4,7 @@
 that displays alternative text for certain words or patterns,
 without changing the original text.
 For example, in LaTeX, the following code
-    
+
 ```latex
 \begin{equation}
     G_{\mu \nu} + \Lambda g_{\mu \nu} = \frac{8 \pi G}{c^4} T_{\mu \nu}
@@ -31,9 +31,6 @@ although a [new version](https://github.com/ctf0/symbol-masks)
 of Symbol Masks is working.
 This extension is intended to be an alternative for these extensions.
 
-This extension is currently under development,
-and is not yet available on the Visual Studio Code Marketplace.
-
 
 ## Features
 
@@ -58,7 +55,7 @@ This extension contributes the following settings:
         ]
     }
     ```
-    
+
     * The `languageId` can be `*`
         to apply the replacement rules to all languages,
         or can be an array of language IDs.
@@ -70,21 +67,21 @@ This extension contributes the following settings:
         so for example, to match `\alpha` in the document,
         the pattern should be `"\\\\alpha/α"`.
 
-    * (Not yet implemented) Instead of a string `"pattern/replacement"`,
+    * Instead of a string `"pattern/replacement"`,
         one can also use an object of the form
         ```json
         {
             "pattern": "pattern",
             "replacement": "replacement",
-            "style": {
-                "color": "#ff0000",
-                "fontWeight": "bold",
-                ...
-            }
+            "color": "#ff0000",
+            "fontWeight": "bold",
+            ...
         }
         ```
-        where the `style` field is optional,
-        and applies the specified style to the replacement text.
+        which can apply specified styles to the replacement text.
+        The supported styles are
+        `backgroundColor`, `border`, `color`,
+        `fontFamily`, `fontSize`, `fontStyle`, `fontWeight`, `textDecoration`.
 
     The default value is a list of patterns for `latex`.
 
@@ -100,6 +97,7 @@ This extension contributes the following settings:
 ## Usage notes
 
 * When using with LaTeX to replace mathematical symbols,
-    using a suitable fallback font with math support,
+    using a suitable font with math support,
     such as [JuliaMono](https://github.com/cormullion/juliamono),
+    either as a fallback font or in the `fontFamily` setting,
     can greatly improve the appearance of the replacement text.
