@@ -2,7 +2,8 @@
   "name": "visual-alias",
   "displayName": "Visual Alias",
   "description": "Display alternative text for certain words or patterns, without changing the original text.",
-  "version": "0.0.1",
+  "version": "0.1.0",
+  "publisher": "chenjing-bu",
   "repository": "https://github.com/abccsss/visual-alias",
   "engines": {
     "vscode": "^1.84.0"
