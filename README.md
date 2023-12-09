@@ -45,30 +45,44 @@ This extension is intended to be an alternative for these extensions.
 This extension contributes the following settings:
 
 * `visualAlias.patterns`:
-    An array of objects of the form
+    An array of pattern groups. For example,
+    a pattern group can be
     ```json
     {
-        "language": "languageId",
+        "language": "latex",
+        "defaultSuffix": "(?![a-zA-Z])",
         "patterns": [
-            "pattern/replacement",
+            "\\\\alpha/α",
             // ...
         ]
     }
     ```
 
-    * The `languageId` can be `*`
+    * The `language` field specifies the language ID
+        that the pattern group applies to.
+        It can be set to `"*"`
         to apply the replacement rules to all languages,
         or can be an array of language IDs.
 
-    * `pattern` is a regular expression,
+    * The optional `defaultSuffix` field specifies a regular expression
+        that is appended to each pattern.
+        Similarly, the optional `defaultPrefix` field can be used
+        to specify a regular expression that is prepended to each pattern.
+
+    * The `patterns` field
+        is an array of patterns to be replaced.
+        Each pattern can be a string of the form `"pattern/replacement"`,
+        where `pattern` is a regular expression,
         and `replacement` is a string.
         Note that special characters in the pattern,
         such as `\`, `/` and `[`, must be escaped,
         so for example, to match `\alpha` in the document,
         the pattern should be `"\\\\alpha/α"`.
+        One can also use `"/pattern/replacement"`
+        to disable the default prefix and suffix.
 
     * Instead of a string `"pattern/replacement"`,
-        one can also use an object of the form
+        a pattern can also be an object of the form
         ```json
         {
             "pattern": "pattern",
@@ -82,6 +96,11 @@ This extension contributes the following settings:
         The supported styles are
         `backgroundColor`, `border`, `color`,
         `fontFamily`, `fontSize`, `fontStyle`, `fontWeight`, `textDecoration`.
+
+    * Additionally, the optional `defaultStyle` field can be used
+        to specify a default style for all patterns in the group.
+        The default style is overridden by the styles specified
+        in the individual patterns.
 
     The default value is a list of patterns for `latex`.
 
