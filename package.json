@@ -21,7 +21,7 @@
       "properties": {
         "visualAlias.patterns": {
           "type": "array",
-          "description": "A list of substitution rules that can be applied to each language.",
+          "description": "A list of pattern groups that can be applied to different languages.",
           "items": {
             "type": "object",
             "properties": {
@@ -41,6 +41,159 @@
                   }
                 ]
               },
+              "defaultPrefix": {
+                "type": "string",
+                "description": "A regular expression pattern that all patterns in this group will be prefixed with. For example, '(?<=...)' or '(?<!...)' can be used to match text before the main pattern.",
+                "markdownDescription": "A regular expression pattern that all patterns in this group will be prefixed with. For example, `(?<=...)` or `(?<!...)` can be used to match text before the main pattern."
+              },
+              "defaultSuffix": {
+                "type": "string",
+                "description": "A regular expression pattern that all patterns in this group will be suffixed with. For example, this can be '\\b' (word boundary) and '(?![a-zA-Z])' (non-letter).",
+                "markdownDescription": "A regular expression pattern that all patterns in this group will be suffixed with. For example, this can be `\\b` (word boundary) and `(?![a-zA-Z])` (non-letter)."
+              },
+              "defaultStyle": {
+                "type": "object",
+                "properties": {
+                  "backgroundColor": {
+                    "type": "string",
+                    "description": "The background color of the replacement text."
+                  },
+                  "border": {
+                    "type": "string",
+                    "description": "The CSS border property of the replacement text, for example '1px solid red'.",
+                    "markdownDescription": "The CSS `border` property of the replacement text, for example `1px solid red`."
+                  },
+                  "color": {
+                    "type": "string",
+                    "description": "The foreground color of the replacement text."
+                  },
+                  "fontFamily": {
+                    "type": "string",
+                    "description": "The CSS font-family property of the replacement text.",
+                    "markdownDescription": "The CSS `font-family` property of the replacement text."
+                  },
+                  "fontSize": {
+                    "type": "string",
+                    "description": "The CSS font-size property of the replacement text.",
+                    "markdownDescription": "The CSS `font-size` property of the replacement text."
+                  },
+                  "fontStyle": {
+                    "type": "string",
+                    "description": "The CSS font-style property of the replacement text.",
+                    "markdownDescription": "The CSS `font-style` property of the replacement text."
+                  },
+                  "fontWeight": {
+                    "type": "string",
+                    "description": "The CSS font-weight property of the replacement text.",
+                    "markdownDescription": "The CSS `font-weight` property of the replacement text."
+                  },
+                  "textDecoration": {
+                    "type": "string",
+                    "description": "The CSS text-decoration property of the replacement text.",
+                    "markdownDescription": "The CSS `text-decoration` property of the replacement text."
+                  },
+                  "css": {
+                    "type": "string",
+                    "description": "Additional CSS styles to apply to the replacement text."
+                  },
+                  "light": {
+                    "type": "object",
+                    "description": "The style of the replacement text in light themes.",
+                    "properties": {
+                      "backgroundColor": {
+                        "type": "string",
+                        "description": "The background color of the replacement text."
+                      },
+                      "border": {
+                        "type": "string",
+                        "description": "The CSS border property of the replacement text, for example '1px solid red'.",
+                        "markdownDescription": "The CSS `border` property of the replacement text, for example `1px solid red`."
+                      },
+                      "color": {
+                        "type": "string",
+                        "description": "The foreground color of the replacement text."
+                      },
+                      "fontFamily": {
+                        "type": "string",
+                        "description": "The CSS font-family property of the replacement text.",
+                        "markdownDescription": "The CSS `font-family` property of the replacement text."
+                      },
+                      "fontSize": {
+                        "type": "string",
+                        "description": "The CSS font-size property of the replacement text.",
+                        "markdownDescription": "The CSS `font-size` property of the replacement text."
+                      },
+                      "fontStyle": {
+                        "type": "string",
+                        "description": "The CSS font-style property of the replacement text.",
+                        "markdownDescription": "The CSS `font-style` property of the replacement text."
+                      },
+                      "fontWeight": {
+                        "type": "string",
+                        "description": "The CSS font-weight property of the replacement text.",
+                        "markdownDescription": "The CSS `font-weight` property of the replacement text."
+                      },
+                      "textDecoration": {
+                        "type": "string",
+                        "description": "The CSS text-decoration property of the replacement text.",
+                        "markdownDescription": "The CSS `text-decoration` property of the replacement text."
+                      },
+                      "css": {
+                        "type": "string",
+                        "description": "Additional CSS styles to apply to the replacement text."
+                      }
+                    }
+                  },
+                  "dark": {
+                    "type": "object",
+                    "description": "The style of the replacement text in dark themes.",
+                    "properties": {
+                      "backgroundColor": {
+                        "type": "string",
+                        "description": "The background color of the replacement text."
+                      },
+                      "border": {
+                        "type": "string",
+                        "description": "The CSS border property of the replacement text, for example '1px solid red'.",
+                        "markdownDescription": "The CSS `border` property of the replacement text, for example `1px solid red`."
+                      },
+                      "color": {
+                        "type": "string",
+                        "description": "The foreground color of the replacement text."
+                      },
+                      "fontFamily": {
+                        "type": "string",
+                        "description": "The CSS font-family property of the replacement text.",
+                        "markdownDescription": "The CSS `font-family` property of the replacement text."
+                      },
+                      "fontSize": {
+                        "type": "string",
+                        "description": "The CSS font-size property of the replacement text.",
+                        "markdownDescription": "The CSS `font-size` property of the replacement text."
+                      },
+                      "fontStyle": {
+                        "type": "string",
+                        "description": "The CSS font-style property of the replacement text.",
+                        "markdownDescription": "The CSS `font-style` property of the replacement text."
+                      },
+                      "fontWeight": {
+                        "type": "string",
+                        "description": "The CSS font-weight property of the replacement text.",
+                        "markdownDescription": "The CSS `font-weight` property of the replacement text."
+                      },
+                      "textDecoration": {
+                        "type": "string",
+                        "description": "The CSS text-decoration property of the replacement text.",
+                        "markdownDescription": "The CSS `text-decoration` property of the replacement text."
+                      },
+                      "css": {
+                        "type": "string",
+                        "description": "Additional CSS styles to apply to the replacement text."
+                      }
+                    }
+                  }
+                }
+              },
               "patterns": {
                 "type": "array",
                 "description": "A list of substitution rules to apply to the language.",
@@ -48,8 +201,8 @@
                   "anyOf": [
                     {
                       "type": "string",
-                      "description": "A substitution rule in the form of 'pattern/replacement', where 'pattern' is a regular expression pattern and 'replacement' is the replacement text. Note that special characters in 'pattern' need to be escaped.",
-                      "markdownDescription": "A substitution rule in the form of `pattern/replacement`, where `pattern` is a regular expression pattern and `replacement` is the replacement text. Note that special characters in `pattern` need to be escaped."
+                      "description": "A substitution rule in the form of 'pattern/replacement', where 'pattern' is a regular expression pattern and 'replacement' is the replacement text. Note that special characters in 'pattern' need to be escaped. Write '/patter/replacement' to disable the default prefix and suffix.",
+                      "markdownDescription": "A substitution rule in the form of `pattern/replacement`, where `pattern` is a regular expression pattern and `replacement` is the replacement text. Note that special characters in `pattern` need to be escaped. Write `/patter/replacement` to disable the default prefix and suffix."
                     },
                     {
                       "type": "object",
@@ -61,6 +214,14 @@
                         "replacement": {
                           "type": "string",
                           "description": "The displayed replacement text."
+                        },
+                        "useDefaultPrefixAndSuffix": {
+                          "type": "boolean",
+                          "description": "Whether to use the default prefix and suffix for this pattern."
+                        },
+                        "useDefaultStyle": {
+                          "type": "boolean",
+                          "description": "Whether to use the default style for this pattern."
                         },
                         "backgroundColor": {
                           "type": "string",
@@ -103,6 +264,102 @@
                         "css": {
                           "type": "string",
                           "description": "Additional CSS styles to apply to the replacement text."
+                        },
+                        "light": {
+                          "type": "object",
+                          "description": "The style of the replacement text in light themes.",
+                          "properties": {
+                            "backgroundColor": {
+                              "type": "string",
+                              "description": "The background color of the replacement text."
+                            },
+                            "border": {
+                              "type": "string",
+                              "description": "The CSS border property of the replacement text, for example '1px solid red'.",
+                              "markdownDescription": "The CSS `border` property of the replacement text, for example `1px solid red`."
+                            },
+                            "color": {
+                              "type": "string",
+                              "description": "The foreground color of the replacement text."
+                            },
+                            "fontFamily": {
+                              "type": "string",
+                              "description": "The CSS font-family property of the replacement text.",
+                              "markdownDescription": "The CSS `font-family` property of the replacement text."
+                            },
+                            "fontSize": {
+                              "type": "string",
+                              "description": "The CSS font-size property of the replacement text.",
+                              "markdownDescription": "The CSS `font-size` property of the replacement text."
+                            },
+                            "fontStyle": {
+                              "type": "string",
+                              "description": "The CSS font-style property of the replacement text.",
+                              "markdownDescription": "The CSS `font-style` property of the replacement text."
+                            },
+                            "fontWeight": {
+                              "type": "string",
+                              "description": "The CSS font-weight property of the replacement text.",
+                              "markdownDescription": "The CSS `font-weight` property of the replacement text."
+                            },
+                            "textDecoration": {
+                              "type": "string",
+                              "description": "The CSS text-decoration property of the replacement text.",
+                              "markdownDescription": "The CSS `text-decoration` property of the replacement text."
+                            },
+                            "css": {
+                              "type": "string",
+                              "description": "Additional CSS styles to apply to the replacement text."
+                            }
+                          }
+                        },
+                        "dark": {
+                          "type": "object",
+                          "description": "The style of the replacement text in dark themes.",
+                          "properties": {
+                            "backgroundColor": {
+                              "type": "string",
+                              "description": "The background color of the replacement text."
+                            },
+                            "border": {
+                              "type": "string",
+                              "description": "The CSS border property of the replacement text, for example '1px solid red'.",
+                              "markdownDescription": "The CSS `border` property of the replacement text, for example `1px solid red`."
+                            },
+                            "color": {
+                              "type": "string",
+                              "description": "The foreground color of the replacement text."
+                            },
+                            "fontFamily": {
+                              "type": "string",
+                              "description": "The CSS font-family property of the replacement text.",
+                              "markdownDescription": "The CSS `font-family` property of the replacement text."
+                            },
+                            "fontSize": {
+                              "type": "string",
+                              "description": "The CSS font-size property of the replacement text.",
+                              "markdownDescription": "The CSS `font-size` property of the replacement text."
+                            },
+                            "fontStyle": {
+                              "type": "string",
+                              "description": "The CSS font-style property of the replacement text.",
+                              "markdownDescription": "The CSS `font-style` property of the replacement text."
+                            },
+                            "fontWeight": {
+                              "type": "string",
+                              "description": "The CSS font-weight property of the replacement text.",
+                              "markdownDescription": "The CSS `font-weight` property of the replacement text."
+                            },
+                            "textDecoration": {
+                              "type": "string",
+                              "description": "The CSS text-decoration property of the replacement text.",
+                              "markdownDescription": "The CSS `text-decoration` property of the replacement text."
+                            },
+                            "css": {
+                              "type": "string",
+                              "description": "Additional CSS styles to apply to the replacement text."
+                            }
+                          }
                         }
                       }
                     }

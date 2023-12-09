@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { debounce } from 'ts-debounce';
 
-import { LanguageEntry } from './config';
+import { PatternGroup, SimpleStyleEntry, StyleEntry } from './config';
 
 /** Represents a single document that is being processed by the Visual Alias extension. */
 export class AliasDocument extends vscode.Disposable {
@@ -138,18 +138,28 @@ export class AliasDocument extends vscode.Disposable {
     this.decorations.clear();
 
     this.config
-      .get<LanguageEntry[]>('patterns', [])
-      .forEach((entry: LanguageEntry) => {
-        if (typeof entry.language === 'string') {
-          if (entry.language !== '*' && entry.language !== languageId) {
+      .get<PatternGroup[]>('patterns', [])
+      .forEach((group: PatternGroup) => {
+        if (typeof group.language === 'string') {
+          if (group.language !== '*' && group.language !== languageId) {
             return;
           }
-        } else if (!entry.language.includes(languageId)) {
+        } else if (!group.language.includes(languageId)) {
           return;
         }
 
-        entry.patterns.forEach((pattern) => {
+        const defaultPrefix = group.defaultPrefix ?? '';
+        const defaultSuffix = group.defaultSuffix ?? '';
+        const defaultStyle = group.defaultStyle ?? {};
+
+        group.patterns.forEach((pattern) => {
           if (typeof pattern === 'string') {
+            let useDefaultPrefixAndSuffix = true;
+            if (pattern.startsWith('/')) {
+              useDefaultPrefixAndSuffix = false;
+              pattern = pattern.slice(1);
+            }
+
             // find '/' not preceded by an odd number of '\'s
             const regex = /(?<!\\)(?:\\\\)*\//;
             const match = regex.exec(pattern);
@@ -157,11 +167,15 @@ export class AliasDocument extends vscode.Disposable {
               return;
             }
 
-            const find = pattern.slice(0, match.index + match[0].length - 1);
+            const find =
+              (useDefaultPrefixAndSuffix ? defaultPrefix : '') +
+              pattern.slice(0, match.index + match[0].length - 1) +
+              (useDefaultPrefixAndSuffix ? defaultSuffix : '');
             const replacement = pattern.slice(match.index + match[0].length);
 
             try {
               const builtPattern: Pattern = {
+                ...defaultStyle,
                 pattern: new RegExp(find, 'g'),
                 replacement,
               };
@@ -173,9 +187,19 @@ export class AliasDocument extends vscode.Disposable {
             } catch {}
           } else {
             try {
+              const useDefaultPrefixAndSuffix =
+                pattern.useDefaultPrefixAndSuffix !== false;
+              const find =
+                (useDefaultPrefixAndSuffix ? defaultPrefix : '') +
+                pattern.pattern +
+                (useDefaultPrefixAndSuffix ? defaultSuffix : '');
+              const groupStyle =
+                pattern.useDefaultStyle === false ? {} : defaultStyle;
+
               const builtPattern: Pattern = {
+                ...groupStyle,
                 ...pattern,
-                pattern: new RegExp(pattern.pattern, 'g'),
+                pattern: new RegExp(find, 'g'),
               };
               this.patterns.push(builtPattern);
               this.decorations.set(
@@ -325,30 +349,33 @@ export class AliasDocument extends vscode.Disposable {
   }
 
   private getReplacementDecoration(pattern: Pattern) {
-    let injectedCss = '';
-    if (pattern.fontFamily) {
-      injectedCss += `; font-family: ${pattern.fontFamily}`;
-    }
-    if (pattern.fontSize) {
-      injectedCss += `; font-size: ${pattern.fontSize}`;
-    }
-    if (pattern.css) {
-      injectedCss += `; ${pattern.css}`;
-    }
-
-    // Injecting to `color` as it seems to override everything else
-    return vscode.window.createTextEditorDecorationType({
+    const options: vscode.DecorationRenderOptions = {
       before: {
         contentText: pattern.replacement,
-        backgroundColor: pattern.backgroundColor,
-        border: pattern.border,
-        color: (pattern.color || '') + injectedCss,
-        fontStyle: pattern.fontStyle,
-        fontWeight: pattern.fontWeight,
-        textDecoration: pattern.textDecoration,
+        ...buildStyle(pattern),
       },
       rangeBehavior: vscode.DecorationRangeBehavior.ClosedClosed,
-    });
+    };
+
+    if (pattern.dark) {
+      options.dark = {
+        before: {
+          contentText: pattern.replacement,
+          ...buildStyle(pattern.dark),
+        },
+      };
+    }
+
+    if (pattern.light) {
+      options.light = {
+        before: {
+          contentText: pattern.replacement,
+          ...buildStyle(pattern.light),
+        },
+      };
+    }
+
+    return vscode.window.createTextEditorDecorationType(options);
   }
 }
 
@@ -369,18 +396,32 @@ function arrayEquals<T>(a: T[], b: T[]) {
   return true;
 }
 
-interface Pattern {
+function buildStyle(style: SimpleStyleEntry) {
+  let injectedCss = '';
+  if (style.fontFamily) {
+    injectedCss += `; font-family: ${style.fontFamily}`;
+  }
+  if (style.fontSize) {
+    injectedCss += `; font-size: ${style.fontSize}`;
+  }
+  if (style.css) {
+    injectedCss += `; ${style.css}`;
+  }
+
+  // Injecting to `color` as it seems to override everything else
+  return {
+    backgroundColor: style.backgroundColor,
+    border: style.border,
+    color: (style.color ?? '') + injectedCss,
+    fontStyle: style.fontStyle,
+    fontWeight: style.fontWeight,
+    textDecoration: style.textDecoration,
+  };
+}
+
+interface Pattern extends StyleEntry {
   pattern: RegExp;
   replacement: string;
-  backgroundColor?: string;
-  border?: string;
-  color?: string;
-  fontFamily?: string;
-  fontSize?: string;
-  fontStyle?: string;
-  fontWeight?: string;
-  textDecoration?: string;
-  css?: string;
 }
 
 interface Replacement {

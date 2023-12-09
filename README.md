@@ -51,7 +51,7 @@ This extension contributes the following settings:
         "language": "languageId",
         "patterns": [
             "pattern/replacement",
-            ...
+            // ...
         ]
     }
     ```
@@ -75,7 +75,7 @@ This extension contributes the following settings:
             "replacement": "replacement",
             "color": "#ff0000",
             "fontWeight": "bold",
-            ...
+            // ...
         }
         ```
         which can apply specified styles to the replacement text.

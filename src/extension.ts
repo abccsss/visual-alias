@@ -7,8 +7,6 @@ const documents: Map<vscode.Uri, AliasDocument> = new Map();
 
 /** This function is called when the extension is activated. */
 export function activate(context: vscode.ExtensionContext) {
-  vscode.window.showInformationMessage('Visual Alias is now active!');
-
   context.subscriptions.push(
     vscode.workspace.onDidCloseTextDocument(onDidCloseDocument)
   );
